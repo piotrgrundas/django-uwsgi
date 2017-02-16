@@ -4,33 +4,28 @@ Simple Django management command useful for deploying an uWSGI instance of your 
 
 1. Install
 
-```
-$ pip install git+https://github.com/pkucmus/django-uwsgi.git
-```
+    ```shell
+    $ pip install git+https://github.com/pkucmus/django-uwsgi.git
+    ```
+2. Modify your `settings`  
+    ```python
 
-2. Modify your `settings`
+    INSTALLED_APPS = [
+        ...
+        'django_uwsgi',
+    ]
 
-```python
+    UWSGI = {
+        'module': '{your_project}.wsgi:application',
+        'socket': '0.0.0.0:8081',
+        'http': '0.0.0.0:8080',
+        'env': 'DJANGO_SETTINGS_MODULE=test_project.settings',
+        'max_requests': 4096,
+    }
 
-INSTALLED_APPS = [
-    ...
-    'django_uwsgi',
-]
-
-UWSGI = {
-    'module': '{your_project}.wsgi:application',
-    'socket': '0.0.0.0:8081',
-    'http': '0.0.0.0:8080',
-    'env': 'DJANGO_SETTINGS_MODULE=test_project.settings',
-    'max_requests': 4096,
-}
-
-```
-
+    ```
 3. Use
 
-```
-
-$ python manage.py uwsgi
-
-```
+    ```shell
+    $ python manage.py uwsgi
+    ```
